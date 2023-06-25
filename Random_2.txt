@@ -1,0 +1,1 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/TargaIsHere/R2FMods/main/KiwamiStylefr"))();

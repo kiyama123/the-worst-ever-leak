@@ -1,0 +1,98 @@
+game.ReplicatedStorage.Styles.Rush.Rush1.Value = "BEvadeStrikeLeft"
+game.ReplicatedStorage.Styles.Rush.Rush2.Value = "BEvadeStrikeRight"
+game.ReplicatedStorage.Styles.Rush.Rush3.Value = "BEvadeStrikeLeft"
+game.ReplicatedStorage.Styles.Rush.Rush4.Value = "BEvadeStrikeRight"
+game.ReplicatedStorage.Styles.Rush.Rush5.Value = "BEvadeStrikeLeft"
+game.ReplicatedStorage.Styles.Rush.Rush6.Value = "BEvadeStrikeRight"
+game.ReplicatedStorage.Styles.Rush.Rush7.Value = "BEvadeStrikeLeft"
+game.ReplicatedStorage.Styles.Rush.Rush8.Value = "BEvadeStrikeRight"
+
+
+game.ReplicatedStorage.Styles.Rush.Strike1.Value = "龍Attack4"
+game.ReplicatedStorage.Styles.Rush.Strike2.Value = "龍2Strike4"
+game.ReplicatedStorage.Styles.Rush.Strike3.Value = "RStrike4"
+game.ReplicatedStorage.Styles.Rush.Strike4.Value = "B2Strike2"
+game.ReplicatedStorage.Styles.Rush.Strike5.Value = "DashAttack"
+game.ReplicatedStorage.Styles.Rush.Strike6.Value = "BTStrike3"
+
+
+game.ReplicatedStorage.Styles.Rush.Color.Value = Color3.new(255, 0, 255) 
+game.ReplicatedStorage.Styles.Rush.VisualName.Value = "akiyama" 
+game.ReplicatedStorage.Styles.Rush.Taunt.Value = "GoonTaunt" 
+game.ReplicatedStorage.Styles.Rush.Speed.Value = 1.8 
+
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/BYONN/R2FMods/69cc758eba2b024e3de511f6bd48b6e5afdb1351/charvoicemod.lua"))() 
+
+
+getfenv().Activated = true
+
+if game.ReplicatedStorage.Styles.Rush:FindFirstChild("StanceStrike") then
+	v = game.ReplicatedStorage.Styles.Rush["StanceStrike"]
+else
+	v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Rush)
+end
+v.Value = 'BTCounter'
+v.Name = "StanceStrike"
+
+
+if game.ReplicatedStorage.Styles.Rush.StanceStrike:FindFirstChild("Ability") then
+	v = game.ReplicatedStorage.Styles.Rush.StanceStrike["Ability"]
+else
+	v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Rush.StanceStrike)
+end
+v.Value = 'Counter Hook'
+v.Name = "Ability"
+
+
+if game.ReplicatedStorage.Styles.Rush:FindFirstChild("Idle") then
+	v = game.ReplicatedStorage.Styles.Rush["Idle"]
+else
+	v = Instance.new("Animation", game.ReplicatedStorage.Styles.Rush)
+end
+
+v.AnimationId = "rbxassetid://12120045620"
+v.Name = "Idle"
+if game.ReplicatedStorage.Styles.Rush.Idle:FindFirstChild("Core") then
+	v = game.ReplicatedStorage.Styles.Rush.Idle["Core"]
+else
+	v = Instance.new("Folder", game.ReplicatedStorage.Styles.Rush.Idle)
+end
+v.Name = "Core"
+
+
+
+if game.ReplicatedStorage.Styles.Rush:FindFirstChild("H_TwoHandeds") then
+	v = game.ReplicatedStorage.Styles.Rush["H_TwoHandeds"]
+else
+	v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Rush)
+end
+v.Value = 'H_SelfDestruct'
+v.Name = "H_TwoHandeds"
+
+
+
+if game.ReplicatedStorage.Styles.Rush:FindFirstChild("RedHeat") then
+	v = game.ReplicatedStorage.Styles.Rush["RedHeat"]
+else
+	v = Instance.new("Folder", game.ReplicatedStorage.Styles.Rush)
+end
+v.Name = "RedHeat"
+
+
+
+if game.ReplicatedStorage.Styles.Rush:FindFirstChild("H_FallenStomp") then
+	v = game.ReplicatedStorage.Styles.Rush["H_FallenStomp"]
+else
+	v = Instance.new("Folder", game.ReplicatedStorage.Styles.Rush)
+end
+v.Value = 'H_FallenBeatdown'
+v.Name = "H_FallenStomp"
+
+
+
+local styleText = "akiyama"
+
+	status.Stats.Kills_Rush.Visual.Value = "Enemies defeated using " .. styleText
+ 
+	abil.Tabs.Tabs.Rush.Filled.Title.Text = styleText

@@ -1,0 +1,272 @@
+-- dancer script
+
+
+local plr = game.Players.LocalPlayer
+local pgui = plr.PlayerGui
+local interf = pgui.Interface
+local bt = interf.Battle
+local main = bt.Main
+
+local function update_action(v, data)
+	local move = game.ReplicatedStorage.Moves[v.Value]
+
+	for i,v in pairs(data) do
+		local value, name = v.Value, v.Name
+
+		local str = move:FindFirstChild(name)
+
+		if str.ClassName == "Animation" then
+			str.AnimationId = value
+		else
+			if not str then
+				str = Instance.new("StringValue")
+				str.Value = value
+				str.Name = name
+				str.Parent = move
+			else
+				str.Value = value
+			end
+		end
+	end
+end
+
+local rushstyle = game.ReplicatedStorage.Styles.Rush
+local brawlerstyle = game.ReplicatedStorage.Styles.Brawler
+local beaststyle = game.ReplicatedStorage.Styles.Beast
+
+--rushstyle["H_Stunning"]:Clone().Parent = brawlerstyle
+
+-- all of em
+
+local styles = {
+	[brawlerstyle] = {
+		actions = {
+			"StanceStrike",
+			"H_BlockingEnemy"
+		},
+		to = rushstyle
+	},
+}--combined styles
+
+-- custom styles
+
+local custom_actions = {
+	[rushstyle] = {
+		{
+			Name = "H_Distanced",
+			Value = "H_Escape"
+		},
+
+		{
+			Name = "H_AirFallen",
+			Value = "H_Knockout"
+		},
+
+		{
+			Name = "H_FallenDown",
+			Value = "H_FallenFinisher"
+		},
+
+		{
+			Name = "Strike1",
+			Value = "FGetup"
+		},
+
+		{
+			Name = "VisualName",
+			Value = "Dancer"
+		},
+
+		{
+			Name = "Color",
+			Value = Color3.new(1, 0, 1)
+		},
+
+		{
+			Name = "Speed",
+			Value = 1.5
+		}
+	},
+}
+
+-- style complier
+
+local function create_value(value, parent)
+	local type = typeof(value)
+
+	if type == "number" then
+		if math.floor(value) == value then
+			local z = Instance.new("IntValue")
+			z.Parent = parent
+			return z
+		end
+
+		local z = Instance.new("NumberValue")
+		z.Parent = parent
+		return z
+	end
+
+	local lookup = {
+		string = "StringValue",
+		Boolean = "BoolValue",
+		Color3 = "Color3Value"
+	}
+
+	local z = Instance.new(lookup[type] or lookup.string)
+	z.Parent = parent
+	return z
+end
+
+for style, actions in pairs(custom_actions) do
+	for i,v in pairs(actions) do
+		if not style:FindFirstChild(v.Name) then
+			local stringval = create_value(v.Value, style)
+			for i,v in pairs(v) do
+				stringval[i] = v
+			end
+		else
+			local t = style:FindFirstChild(v.Name)
+			for i,v in pairs(v) do
+				t[i] = v
+			end
+		end
+	end
+end
+
+for style, actions in pairs(styles) do
+	for i,actionname in pairs(actions.actions) do
+		local action = style:FindFirstChild(actionname)
+
+		if not action then
+			continue
+		end
+
+		if actions.to:FindFirstChild(actionname) then
+			actions.to[actionname]:Destroy()
+		end
+
+		action:Clone().Parent = actions.to
+	end
+end
+
+rushstyle.Rush1.Value = "RPunch1"
+rushstyle.Rush2.Value = "RPunch2"
+rushstyle.Rush3.Value = "RPunch5"
+
+rushstyle.Rush4.Value = "RPunch2"
+rushstyle.Rush5.Value = "RPunch1"
+rushstyle.Rush6.Value = "RPunch5"
+
+rushstyle.Strike1.Value = "RPunch1"
+rushstyle.Strike2.Value = "RPunch2"
+rushstyle.Strike3.Value = "RPunch5"
+rushstyle.Strike4.Value = "RPunch3"
+rushstyle.Strike5.Value = "RPunch4"
+rushstyle.Strike6.Value = "B2Strike3"
+
+local plr = game.Players.LocalPlayer
+local pgui = plr.PlayerGui
+local interf = pgui.Interface
+local bt = interf.Battle
+local main = bt.Main
+
+local function sendNotification(text, color)
+	if not color then color = Color3.new(1, 1, 1) end
+	pgui.Notify.Awards.ChildAdded:Once(function(c)
+		if c.Text == text then
+			c.TextColor3 = color
+			coroutine.wrap(function()
+				local con;
+				con = game:GetService("RunService").RenderStepped:Connect(function()
+					if not c then
+						con:Disconnect()
+						return
+					end
+					c.TextColor3 = color
+				end)()
+			end)()
+		end
+	end)
+	pgui["नोटिफ"]:Fire(text)
+end
+
+function playticksound()
+	local sfx = Instance.new("Sound", workspace)
+	sfx.SoundId = "rbxassetid://12222183"
+	sfx.Volume = 2
+
+	game:GetService("SoundService"):PlayLocalSound(sfx)
+
+	spawn(function()
+		wait(2)
+		sfx:Destroy()
+	end)
+end
+
+local uis = game:GetService("UserInputService")
+local speed = 1.8
+
+for i=1,8 do
+	update_action(rushstyle:FindFirstChild("Rush"..i), {
+		{
+			Name = "AniSpeed",
+			Value = speed
+		},
+
+		{
+			Name = "ComboAt",
+			Value = 0.35 / speed
+		}
+	})
+end
+
+local color = Color3.new(1, 1, 1)
+
+--local grabstrike = rushstyle:WaitForChild("GrabStrike")
+--local guruparry = brawlerstyle:WaitForChild("GrabStrike"):Clone()
+
+--sendNotification("Press X to swap counter step and parry on Dancer", color)
+
+--uis.InputBegan:Connect(function(key)
+--	if game.UserInputService:GetFocusedTextBox() == nil then
+--		if key.KeyCode == Enum.KeyCode.X then
+--			playticksound()
+--			if grabstrike.Parent ~= nil then
+--				grabstrike.Parent = nil
+--				guruparry.Parent = rushstyle
+--				sendNotification("Parry enabled", color)
+--			else
+--				grabstrike.Parent = rushstyle
+--				guruparry.Parent = nil
+--				sendNotification("Quick step enabled", color)
+--			end
+--		end
+--	end
+--end)
+
+local status = plr.Status
+
+local function update()
+	if status.Heat.Value <= 75 then
+		rushstyle.H_Distanced.Value = "H_Escape"
+		rushstyle.H_AirFallen.Value = "H_Whirl"
+	else
+		rushstyle.H_Distanced.Value = "H_FaceTwist"
+		rushstyle.H_AirFallen.Value = "H_Knockout"
+	end
+end
+
+for i,v in pairs(game.ReplicatedStorage.Styles.Rush:GetChildren()) do
+	if v:IsA("Animation") and v.Name:find("Evade") then
+		v.AnimationId = "rbxassetid://8223592585"
+	end
+end
+
+interf.Client.Disabled = true
+task.wait(1)
+interf.Client.Disabled = false
+task.wait(0.1)
+
+while task.wait() and not interf.Client.Disabled do
+	update()
+end

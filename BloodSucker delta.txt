@@ -1,0 +1,141 @@
+BloodSucker
+
+local c = game.Players.LocalPlayer.Character
+
+if c:FindFirstChild("Camera") then
+	c.Camera:Destroy()
+end
+
+local part = Instance.new("Part", c)
+part.Name = "Camera"
+part.Anchored = true
+part.CanQuery = false
+part.CanCollide = false
+part.CanTouch = false
+part.Transparency = 1
+
+local function sethat_transparency(transparency)
+	for i,v:Accessory in c:GetChildren() do
+		if v:IsA("Accessory") and (v.AccessoryType == Enum.AccessoryType.Face or v.AccessoryType == Enum.AccessoryType.Hat) then
+			local handle = v:FindFirstChildWhichIsA("BasePart")
+			
+			if handle then
+				handle.Transparency = transparency
+			end
+		end
+	end
+end
+
+local function isincamera()
+	return workspace.CurrentCamera.CameraType == Enum.CameraType.Scriptable
+end
+
+local particles = {}
+
+for i,v:ParticleEmitter in c:GetDescendants() do
+	if v:IsA('Particle') then
+		local texture = v.Texture
+		
+		table.insert(particles, {
+			Disable = function()
+				v.Texture = ""
+			end,
+			
+			Enable = function()
+				v.Texture = texture
+			end,
+		})
+	end
+end
+
+local b = game:GetService("RunService").RenderStepped:Connect(function()
+	part.CFrame = c.Head.CFrame
+	
+	if isincamera() then
+		sethat_transparency(1)
+		
+		for i,v in particles do
+			v.Disable()
+		end
+	else
+			sethat_transparency(0)
+		
+		for i,v in particles do
+			v.Enable()
+		end
+	end
+end)
+
+part.Destroying:Once(function()
+	b:Disconnect()
+end)
+
+if not game.ReplicatedStorage.Styles.Brawler:FindFirstChild("Taunt") then
+		local n = Instance.new("StringValue")
+		n.Name = "Taunt"
+		n.Value = "GoonTaunt"
+		n.Parent = 	game.ReplicatedStorage.Styles.Brawler
+	end
+
+local Bloodsucker = game:GetService("ReplicatedStorage").Styles["Brawler"]:Clone()
+Bloodsucker.Speed.Value = 2
+Bloodsucker.Color.Value = Color3.new(1, 1, 0)
+Bloodsucker.Rush1.Value = "TFPunch1"
+Bloodsucker.Rush2.Value = "FPunch2"
+Bloodsucker.Rush3.Value = "FPunch1"
+Bloodsucker.Rush4.Value = "FPunch2"
+Bloodsucker.Strike2.Value = "FStrike3"
+Bloodsucker.Strike3.Value = "FStrike3"
+Bloodsucker.Strike4.Value = "FStrike3"
+Bloodsucker.Strike5.Value = "FStrike3"
+Bloodsucker.H_Fallen.Value = "H_FallenSlam"
+Bloodsucker.H_FallenDown.Value = "H_FallenGrate"
+Bloodsucker.VisualName.Value = "Bloodsucker"
+Bloodsucker.Name = "Bloodsucker"
+Bloodsucker.Parent = game:GetService("ReplicatedStorage").Styles
+ 
+ 
+Bloodsucker.Strike1.Value = "龍Strike1"
+local styleToChange = "Brawler" --Brawler = fisticuffs, Rush = frenzy, Beast = brute.  you MUST use one of these 3 or else you cannot use the custom style.
+local styleToChangeTo = "Bloodsucker" --堂島の龍 is dragon style. you can find the styles at game.ReplicatedStorage.Styles
+local styleToChangeTo = "Bloodsucker" 
+ 
+for i, v in pairs(game.ReplicatedStorage.Styles:FindFirstChild(styleToChange):GetChildren()) do
+ 
+    v:Destroy()
+ 
+end
+ 
+for i, v in pairs(game.ReplicatedStorage.Styles:FindFirstChild(styleToChangeTo):GetChildren()) do
+    v = v:Clone()
+    v.Parent = game.ReplicatedStorage.Styles[styleToChange]
+ 
+end
+ 
+game.StarterGui:SetCore("SendNotification",{
+    Title = styleToChangeTo.." style loaded!";
+    Text = styleToChangeTo.." style has replaced "..styleToChange..".";
+    Button1 = "OK!";
+})
+
+getfenv().Activated = true
+
+local function FillHeat()
+    local Event = game:GetService("ReplicatedStorage").Events.ME
+
+    for i=1,6 do
+        local A_1 =  {
+            [1] = "heat", 
+            [2] = game:GetService("ReplicatedStorage").Moves.Taunt
+        }
+        Event:FireServer(A_1)
+    end
+end
+
+spawn(function()
+    while true do
+        task.wait()
+        if not Activated then break end
+        FillHeat()
+    end
+end)

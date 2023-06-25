@@ -1,0 +1,282 @@
+
+local plr = game.Players.LocalPlayer
+local pgui = plr.PlayerGui
+local interf = pgui.Interface
+local bt = interf.Battle
+local main = bt.Main
+
+local function update_action(v, data)
+	local move = game.ReplicatedStorage.Moves[v.Value]
+
+	for i,v in pairs(data) do
+		local value, name = v.Value, v.Name
+
+		local str = move:FindFirstChild(name)
+
+		if str.ClassName == "Animation" then
+			str.AnimationId = value
+		else
+			if not str then
+				str = Instance.new("StringValue")
+				str.Value = value
+				str.Name = name
+				str.Parent = move
+			else
+				str.Value = value
+			end
+		end
+	end
+end
+
+local rushstyle = game.ReplicatedStorage.Styles.Rush
+local brawlerstyle = game.ReplicatedStorage.Styles.Brawler
+local beaststyle = game.ReplicatedStorage.Styles.Beast
+
+--rushstyle["H_Stunning"]:Clone().Parent = brawlerstyle
+
+-- all of em
+
+local styles = {
+	[brawlerstyle] = {
+		actions = {
+			"H_BlockingEnemy"
+
+
+		},
+		to = rushstyle
+	},
+}--combined styles
+
+-- custom styles
+
+local custom_actions = {
+	[rushstyle] = {
+		{
+			Name = "H_Stunned",
+			Value = "H_SpinCounterBack"
+		},
+         
+
+                {
+			Name = "H_Fallen",
+			Value = "H_FallenKick"
+		},
+
+
+       
+                {
+			Name = "H_EvadedB",
+			Value = "H_SpinCounterLeft"
+		},
+                
+
+
+
+                {
+			Name = "H_EvadedF",
+			Value = "H_TSpinCounterLeft"
+		},
+
+               
+
+                {
+			Name = "H_CounterSolo",
+			Value = "H_TSpinCounterRight"
+		},
+                 
+
+
+                {
+			Name = "H_EvadedL",
+			Value = ""
+		},
+
+
+                {
+			Name = "Taunt",
+			Value = "RushTaunt"
+		},
+
+
+
+                {
+			Name = "Grab",
+			Value = "BStrike5"
+		},
+
+
+
+
+		{
+			Name = "H_FallenDown",
+			Value = "H_FallenKick"
+		},
+
+
+
+		{
+			Name = "VisualName",
+			Value = "Rush"
+		},
+
+		{
+			Name = "Color",
+			Value = Color3.new(1, 0, 1)
+		},
+
+		{
+			Name = "Speed",
+			Value = 1.25
+		},
+
+
+	},
+}
+
+
+
+local function create_value(value, parent)
+	local type = typeof(value)
+
+	if type == "number" then
+		if math.floor(value) == value then
+			local z = Instance.new("IntValue")
+			z.Parent = parent
+			return z
+		end
+
+		local z = Instance.new("NumberValue")
+		z.Parent = parent
+		return z
+	end
+
+	local lookup = {
+		string = "StringValue",
+		Boolean = "BoolValue",
+		Color3 = "Color3Value"
+	}
+
+	local z = Instance.new(lookup[type] or lookup.string)
+	z.Parent = parent
+	return z
+end
+
+for style, actions in pairs(custom_actions) do
+	for i,v in pairs(actions) do
+		if not style:FindFirstChild(v.Name) then
+			local stringval = create_value(v.Value, style)
+			for i,v in pairs(v) do
+				stringval[i] = v
+			end
+		else
+			local t = style:FindFirstChild(v.Name)
+			for i,v in pairs(v) do
+				t[i] = v
+			end
+		end
+	end
+end
+
+for style, actions in pairs(styles) do
+	for i,actionname in pairs(actions.actions) do
+		local action = style:FindFirstChild(actionname)
+
+		if not action then
+			continue
+		end
+
+		if actions.to:FindFirstChild(actionname) then
+			actions.to[actionname]:Destroy()
+		end
+
+		action:Clone().Parent = actions.to
+	end
+end
+
+rushstyle.Rush1.Value = "RPunch1"
+rushstyle.Rush2.Value = "RPunch2"
+rushstyle.Rush3.Value = "RPunch1"
+rushstyle.Rush4.Value = "RPunch2"
+rushstyle.Rush5.Value = "RPunch1"
+rushstyle.Rush6.Value = "RPunch5"
+rushstyle.Rush7.Value = "RPunch6"
+rushstyle.Rush8.Value = "RPunch7"
+
+
+rushstyle.Strike1.Value = "FStrike1"
+rushstyle.Strike2.Value = "BStrike2"
+rushstyle.Strike3.Value = "BStrike2"
+rushstyle.Strike4.Value = "BStrike2"
+rushstyle.Strike5.Value = "BStrike2"
+rushstyle.Strike6.Value = "BStrike2"
+rushstyle.Strike7.Value = "B2Strike3"
+rushstyle.Strike8.Value = "B2Strike3"
+rushstyle.Strike9.Value = "B2Strike3"
+
+
+local plr = game.Players.LocalPlayer
+local pgui = plr.PlayerGui
+local interf = pgui.Interface
+local bt = interf.Battle
+local main = bt.Main
+
+local uis = game:GetService("UserInputService")
+local speed = 1.8
+
+for i=1,8 do
+	update_action(rushstyle:FindFirstChild("Rush"..i), {
+		{
+			Name = "AniSpeed",
+			Value = speed
+		},
+
+		{
+			Name = "ComboAt",
+			Value = 0.4 / speed
+		}
+	})
+end
+
+local color = Color3.new(1, 1, 1)
+
+for i,v in pairs(game.ReplicatedStorage.Styles.Rush:GetChildren()) do
+	if v:IsA("Animation") and v.Name:find("Evade") then
+		v.AnimationId = "rbxassetid://11632565056"
+	end
+end
+
+game.ReplicatedStorage.Moves.RPunch1.Anim.AnimationId = "rbxassetid://12338273712"
+game.ReplicatedStorage.Moves.RPunch2.Anim.AnimationId = "rbxassetid://12338275115"
+game.ReplicatedStorage.Moves.RPunch5.Anim.AnimationId = "rbxassetid://8392041475"
+game.ReplicatedStorage.Moves.RPunch6.Anim.AnimationId = "rbxassetid://12801169651"
+
+game.ReplicatedStorage.Moves.RPunch7.Anim.AnimationId = "rbxassetid://8392039433"
+game.ReplicatedStorage.Moves.BStrike5.Anim.AnimationId = "rbxassetid://8392045466"
+game.ReplicatedStorage.Moves.BStrike2.Anim.AnimationId = "rbxassetid://11153943310"
+game.ReplicatedStorage.Moves.B2Strike3.Anim.AnimationId = "rbxassetid://11475224934"
+
+
+interf.Client.Disabled = true
+task.wait(1)
+interf.Client.Disabled = false
+task.wait(0.1)
+
+
+while task.wait() and not interf.Client.Disabled do
+	update()
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

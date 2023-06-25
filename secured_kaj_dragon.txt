@@ -1,0 +1,2 @@
+loadstring(game:HttpGet(("https://raw.githubusercontent.com/eekaj/kaj-dragon/main/private%20r2f?token=GHSAT0AAAAAACDYJ7NZTB6MGBHKR7CGXQFKZEFK6MQ"),true))()
+--secured version

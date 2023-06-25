@@ -1,0 +1,1079 @@
+local plr = game.Players.LocalPlayer
+local pgui = plr.PlayerGui
+local interf = pgui.Interface
+local bt = interf.Battle
+local main = bt.Main
+
+local function update_action(v, data)
+	local move = game.ReplicatedStorage.Moves[v.Value]
+
+	for i,v in pairs(data) do
+		local value, name = v.Value, v.Name
+
+		local str = move:FindFirstChild(name)
+
+		if str.ClassName == "Animation" then
+			str.AnimationId = value
+		else
+			if not str then
+				str = Instance.new("StringValue")
+				str.Value = value
+				str.Name = name
+				str.Parent = move
+			else
+				str.Value = value
+			end
+		end
+	end
+end
+
+local rushstyle = game.ReplicatedStorage.Styles.Rush
+local brawlerstyle = game.ReplicatedStorage.Styles.Brawler
+local beaststyle = game.ReplicatedStorage.Styles.Beast
+
+--rushstyle["H_Stunning"]:Clone().Parent = brawlerstyle
+
+-- all of em
+
+local styles = {
+	[brawlerstyle] = {
+		actions = {
+			"StanceStrike",
+			"H_BlockingEnemy",
+                        "DoubleBlows",
+                        "2Strike1",
+                        "2Strike2",
+                        "2Strike3",
+                        "2Strike4",
+                        "BlockStrike",
+                        "StrikeThrow",
+                        "Throw",
+                        "HThrow",
+                        "DashAttack",
+                        "H_GunStandingHandgun",
+                        "H_GunStandingShotgun",
+                        "H_GrabStanding2",
+                        "H_GrabStanding"
+		},
+		to = rushstyle
+	},
+}--combined styles
+
+-- custom styles
+
+local custom_actions = {
+	[rushstyle] = {
+		{
+			Name = "H_Stunned",
+			Value = "H_FrenzySpinCounter"
+		},
+         
+
+                {
+			Name = "H_Fallen",
+			Value = "H_KnockoutFront"
+		},
+
+
+       
+                {
+			Name = "H_EvadedB",
+			Value = "H_SpinCounterLeft"
+		},
+                
+
+
+
+                {
+			Name = "H_EvadedF",
+			Value = "H_ShotStopperSMG"
+		},
+
+               
+
+                {
+			Name = "H_CounterSolo",
+			Value = "H_SpinCounterRight"
+		},
+                 
+
+
+                {
+			Name = "H_EvadedL",
+			Value = "H_SpinCounterBack"
+		},
+
+
+                {
+			Name = "Taunt",
+			Value = "GoonTaunt"
+		},
+
+
+
+                {
+			Name = "Grab",
+			Value = "Grab"
+		},
+
+
+
+
+		{
+			Name = "H_FallenDown",
+			Value = "H_HeadPressUp"
+		},
+
+
+
+		{
+			Name = "VisualName",
+			Value = "RapidFoots"
+		},
+
+		{
+			Name = "Color",
+			Value = Color3.new(1, 0, 1)
+		},
+
+		{
+			Name = "Speed",
+			Value = 1.25
+		},
+
+
+	},
+}
+
+
+-- style complier
+
+local function create_value(value, parent)
+	local type = typeof(value)
+
+	if type == "number" then
+		if math.floor(value) == value then
+			local z = Instance.new("IntValue")
+			z.Parent = parent
+			return z
+		end
+
+		local z = Instance.new("NumberValue")
+		z.Parent = parent
+		return z
+	end
+
+	local lookup = {
+		string = "StringValue",
+		Boolean = "BoolValue",
+		Color3 = "Color3Value"
+	}
+
+	local z = Instance.new(lookup[type] or lookup.string)
+	z.Parent = parent
+	return z
+end
+
+for style, actions in pairs(custom_actions) do
+	for i,v in pairs(actions) do
+		if not style:FindFirstChild(v.Name) then
+			local stringval = create_value(v.Value, style)
+			for i,v in pairs(v) do
+				stringval[i] = v
+			end
+		else
+			local t = style:FindFirstChild(v.Name)
+			for i,v in pairs(v) do
+				t[i] = v
+			end
+		end
+	end
+end
+
+for style, actions in pairs(styles) do
+	for i,actionname in pairs(actions.actions) do
+		local action = style:FindFirstChild(actionname)
+
+		if not action then
+			continue
+		end
+
+		if actions.to:FindFirstChild(actionname) then
+			actions.to[actionname]:Destroy()
+		end
+
+		action:Clone().Parent = actions.to
+	end
+end
+
+rushstyle.Rush1.Value = "RPunch1"
+rushstyle.Rush2.Value = "RPunch2"
+rushstyle.Rush3.Value = "RPunch1"
+rushstyle.Rush4.Value = "RPunch2"
+rushstyle.Rush5.Value = "RPunch1"
+rushstyle.Rush6.Value = "RPunch2"
+rushstyle.Rush7.Value = "RPunch1"
+rushstyle.Rush8.Value = "RPunch2"
+
+
+rushstyle.Strike1.Value = "BStomp"
+rushstyle.Strike2.Value = "BStrike2"
+rushstyle.Strike3.Value = "BStrike2"
+rushstyle.Strike4.Value = "BStrike2"
+rushstyle.Strike5.Value = "BStrike3"
+rushstyle.Strike6.Value = "BStrike3"
+rushstyle.Strike7.Value = "BStrike3"
+rushstyle.Strike8.Value = "BStrike4"
+rushstyle.Strike9.Value = "BStrike4"
+
+
+local plr = game.Players.LocalPlayer
+local pgui = plr.PlayerGui
+local interf = pgui.Interface
+local bt = interf.Battle
+local main = bt.Main
+
+local function sendNotification(text, color)
+	if not color then color = Color3.new(1, 1, 1) end
+	pgui.Notify.Awards.ChildAdded:Once(function(c)
+		if c.Text == text then
+			c.TextColor3 = color
+			coroutine.wrap(function()
+				local con;
+				con = game:GetService("RunService").RenderStepped:Connect(function()
+					if not c then
+						con:Disconnect()
+						return
+					end
+					c.TextColor3 = color
+				end)()
+			end)()
+		end
+	end)
+	pgui["नोटिफ"]:Fire(text)
+end
+
+function playticksound()
+	local sfx = Instance.new("Sound", workspace)
+	sfx.SoundId = "rbxassetid://12222183"
+	sfx.Volume = 2
+
+	game:GetService("SoundService"):PlayLocalSound(sfx)
+
+	spawn(function()
+		wait(2)
+		sfx:Destroy()
+	end)
+end
+
+local uis = game:GetService("UserInputService")
+local speed = 1.8
+
+for i=1,8 do
+	update_action(rushstyle:FindFirstChild("Rush"..i), {
+		{
+			Name = "AniSpeed",
+			Value = speed
+		},
+
+		{
+			Name = "ComboAt",
+			Value = 0.4 / speed
+		}
+	})
+end
+
+local color = Color3.new(1, 1, 1)
+
+local grabstrike = rushstyle:WaitForChild("GrabStrike")
+local guruparry = brawlerstyle:WaitForChild("GrabStrike"):Clone()
+
+sendNotification("Press X to swap counter step and parry on Akiyama", color)
+
+uis.InputBegan:Connect(function(key)
+	if game.UserInputService:GetFocusedTextBox() == nil then
+		if key.KeyCode == Enum.KeyCode.X then
+			playticksound()
+			if grabstrike.Parent ~= nil then
+				grabstrike.Parent = nil
+				guruparry.Parent = rushstyle
+				sendNotification("Guru Parry Mode", color)
+			else
+				grabstrike.Parent = rushstyle
+				guruparry.Parent = nil
+				sendNotification("Counter Quickstep Mode", color)
+			end
+		end
+	end
+end)
+
+local status = plr.Status
+
+local function update()
+	if status.Heat.Value <= 75 then
+		rushstyle.H_Distanced.Value = "H_Escape"
+		rushstyle.H_AirFallen.Value = "H_Rolling"
+	else
+		rushstyle.H_Distanced.Value = "H_FaceTwist"
+		rushstyle.H_AirFallen.Value = "H_Rolling"
+	end
+end
+
+for i,v in pairs(game.ReplicatedStorage.Styles.Rush:GetChildren()) do
+	if v:IsA("Animation") and v.Name:find("Evade") then
+		v.AnimationId = "rbxassetid://11632565056"
+	end
+end
+
+game.ReplicatedStorage.Moves.RPunch1.Anim.AnimationId = "rbxassetid://11593137190"
+game.ReplicatedStorage.Moves.RPunch2.Anim.AnimationId = "rbxassetid://11593135371"
+game.ReplicatedStorage.Moves.TigerDrop.Anim.AnimationId = "rbxassetid://12338277925"
+game.ReplicatedStorage.Moves.Grab.Anim.AnimationId = "rbxassetid://8706178663"
+game.ReplicatedStorage.Moves.BStrike2.Anim.AnimationId = "rbxassetid://12801167344"
+game.ReplicatedStorage.Moves.BStrike3.Anim.AnimationId = "rbxassetid://11475224934"
+game.ReplicatedStorage.Moves.BStrike4.Anim.AnimationId = "rbxassetid://11949036010"
+
+
+interf.Client.Disabled = true
+task.wait(1)
+interf.Client.Disabled = false
+task.wait(0.1)
+
+
+
+
+
+
+if game.ReplicatedStorage.Moves:FindFirstChild("BStrike2") then
+v = game.ReplicatedStorage.Moves["BStrike2"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves)
+end
+v.Name = "BStrike2"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("Sound") then
+v = game.ReplicatedStorage.Moves.BStrike2["Sound"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 'PSwing1'
+v.Name = "Sound"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("Anim") then
+v = game.ReplicatedStorage.Moves.BStrike2["Anim"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Moves.BStrike2)
+end
+
+v.AnimationId = "rbxassetid://12801167344"
+v.Name = "Anim"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("Dmg") then
+v = game.ReplicatedStorage.Moves.BStrike2["Dmg"]
+else
+v = Instance.new("IntValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 80
+v.Name = "Dmg"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("AniSpeed") then
+v = game.ReplicatedStorage.Moves.BStrike2["AniSpeed"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 1
+v.Name = "AniSpeed"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("KnockOut") then
+v = game.ReplicatedStorage.Moves.BStrike2["KnockOut"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Name = "KnockOut"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("HitboxLocations") then
+v = game.ReplicatedStorage.Moves.BStrike2["HitboxLocations"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = '[["LeftHand",2,[0,0,0]],["LeftLowerArm",1.5,[0,0,0]],["LeftUpperArm",1,[0,0,0]]]'
+v.Name = "HitboxLocations"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("Trail") then
+v = game.ReplicatedStorage.Moves.BStrike2["Trail"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = ''
+v.Name = "Trail"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("Striken") then
+v = game.ReplicatedStorage.Moves.BStrike2["Striken"]
+else
+v = Instance.new("IntValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 1
+v.Name = "Striken"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("Cancelable") then
+v = game.ReplicatedStorage.Moves.BStrike2["Cancelable"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Name = "Cancelable"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("FinishingBlow") then
+v = game.ReplicatedStorage.Moves.BStrike2["FinishingBlow"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Name = "FinishingBlow"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("NormalAttack") then
+v = game.ReplicatedStorage.Moves.BStrike2["NormalAttack"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Name = "NormalAttack"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("ComboAt") then
+v = game.ReplicatedStorage.Moves.BStrike2["ComboAt"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 0.8
+v.Name = "ComboAt"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("MoveDuration") then
+v = game.ReplicatedStorage.Moves.BStrike2["MoveDuration"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 0.3
+v.Name = "MoveDuration"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("MoveForward") then
+v = game.ReplicatedStorage.Moves.BStrike2["MoveForward"]
+else
+v = Instance.new("IntValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 9
+v.Name = "MoveForward"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("NoShieldBreak") then
+v = game.ReplicatedStorage.Moves.BStrike2["NoShieldBreak"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Name = "NoShieldBreak"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("HSize") then
+v = game.ReplicatedStorage.Moves.BStrike2["HSize"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 0.75
+v.Name = "HSize"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("HitDur") then
+v = game.ReplicatedStorage.Moves.BStrike2["HitDur"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 0.3
+v.Name = "HitDur"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("MoveStart") then
+v = game.ReplicatedStorage.Moves.BStrike2["MoveStart"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 0.3
+v.Name = "MoveStart"
+
+
+if game.ReplicatedStorage.Moves:FindFirstChild("BStrike3") then
+v = game.ReplicatedStorage.Moves["BStrike3"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves)
+end
+v.Name = "BStrike3"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("Sound") then
+v = game.ReplicatedStorage.Moves.BStrike3["Sound"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Value = 'PSwing1'
+v.Name = "Sound"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("Anim") then
+v = game.ReplicatedStorage.Moves.BStrike3["Anim"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Moves.BStrike3)
+end
+
+v.AnimationId = "rbxassetid://11475224934"
+v.Name = "Anim"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("Dmg") then
+v = game.ReplicatedStorage.Moves.BStrike3["Dmg"]
+else
+v = Instance.new("IntValue", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Value = 120
+v.Name = "Dmg"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("AniSpeed") then
+v = game.ReplicatedStorage.Moves.BStrike3["AniSpeed"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Value = 1
+v.Name = "AniSpeed"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("HitboxLocations") then
+v = game.ReplicatedStorage.Moves.BStrike3["HitboxLocations"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Value = '[["RightHand",2,[0,0,0]],["RightLowerArm",1.5,[0,0,0]],["RightUpperArm",1,[0,0,0]]]'
+v.Name = "HitboxLocations"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("MoveDuration") then
+v = game.ReplicatedStorage.Moves.BStrike3["MoveDuration"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Value = 0.3
+v.Name = "MoveDuration"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("Trail") then
+v = game.ReplicatedStorage.Moves.BStrike3["Trail"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Value = ''
+v.Name = "Trail"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("Striken") then
+v = game.ReplicatedStorage.Moves.BStrike3["Striken"]
+else
+v = Instance.new("IntValue", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Value = 2
+v.Name = "Striken"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("NoKnockback") then
+v = game.ReplicatedStorage.Moves.BStrike3["NoKnockback"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Name = "NoKnockback"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("Cancelable") then
+v = game.ReplicatedStorage.Moves.BStrike3["Cancelable"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Name = "Cancelable"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("HitDur") then
+v = game.ReplicatedStorage.Moves.BStrike3["HitDur"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Value = 0.3
+v.Name = "HitDur"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("FinishingBlow") then
+v = game.ReplicatedStorage.Moves.BStrike3["FinishingBlow"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Name = "FinishingBlow"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("KnockOut") then
+v = game.ReplicatedStorage.Moves.BStrike3["KnockOut"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Name = "KnockOut"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("RagdollTime") then
+v = game.ReplicatedStorage.Moves.BStrike3["RagdollTime"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Value = 2
+v.Name = "RagdollTime"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("NormalAttack") then
+v = game.ReplicatedStorage.Moves.BStrike3["NormalAttack"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Name = "NormalAttack"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("ComboAt") then
+v = game.ReplicatedStorage.Moves.BStrike3["ComboAt"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Value = 0.8
+v.Name = "ComboAt"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("MoveForward") then
+v = game.ReplicatedStorage.Moves.BStrike3["MoveForward"]
+else
+v = Instance.new("IntValue", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Value = 9
+v.Name = "MoveForward"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("Heat") then
+v = game.ReplicatedStorage.Moves.BStrike3["Heat"]
+else
+v = Instance.new("IntValue", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Value = 15
+v.Name = "Heat"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("HSize") then
+v = game.ReplicatedStorage.Moves.BStrike3["HSize"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Value = 2
+v.Name = "HSize"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("Reaction") then
+v = game.ReplicatedStorage.Moves.BStrike3["Reaction"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Value = 'GutPunch'
+v.Name = "Reaction"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("TurnAnim") then
+v = game.ReplicatedStorage.Moves.BStrike3["TurnAnim"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Moves.BStrike3)
+end
+
+v.AnimationId = "rbxassetid://11475142643"
+v.Name = "TurnAnim"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("Circle") then
+v = game.ReplicatedStorage.Moves.BStrike3["Circle"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Name = "Circle"
+if game.ReplicatedStorage.Moves.BStrike3:FindFirstChild("MoveStart") then
+v = game.ReplicatedStorage.Moves.BStrike3["MoveStart"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike3)
+end
+v.Value = 0.3
+v.Name = "MoveStart"
+
+
+
+if game.ReplicatedStorage.Moves:FindFirstChild("BStrike4") then
+v = game.ReplicatedStorage.Moves["BStrike4"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves)
+end
+v.Name = "BStrike4"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("Sound") then
+v = game.ReplicatedStorage.Moves.BStrike4["Sound"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Moves.BStrike4)
+end
+v.Value = 'PSwing1'
+v.Name = "Sound"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("Anim") then
+v = game.ReplicatedStorage.Moves.BStrike4["Anim"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Moves.BStrike4)
+end
+
+v.AnimationId = "rbxassetid://11949036010"
+v.Name = "Anim"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("Dmg") then
+v = game.ReplicatedStorage.Moves.BStrike4["Dmg"]
+else
+v = Instance.new("IntValue", game.ReplicatedStorage.Moves.BStrike4)
+end
+v.Value = 130
+v.Name = "Dmg"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("AniSpeed") then
+v = game.ReplicatedStorage.Moves.BStrike4["AniSpeed"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike4)
+end
+v.Value = 1
+v.Name = "AniSpeed"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("HitboxLocations") then
+v = game.ReplicatedStorage.Moves.BStrike4["HitboxLocations"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Moves.BStrike4)
+end
+v.Value = '[["RightHand",2,[0,0,0]],["RightLowerArm",1.5,[0,0,0]],["RightUpperArm",1,[0,0,0]]]'
+v.Name = "HitboxLocations"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("KnockOut") then
+v = game.ReplicatedStorage.Moves.BStrike4["KnockOut"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike4)
+end
+v.Name = "KnockOut"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("Trail") then
+v = game.ReplicatedStorage.Moves.BStrike4["Trail"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Moves.BStrike4)
+end
+v.Value = ''
+v.Name = "Trail"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("Striken") then
+v = game.ReplicatedStorage.Moves.BStrike4["Striken"]
+else
+v = Instance.new("IntValue", game.ReplicatedStorage.Moves.BStrike4)
+end
+v.Value = 3
+v.Name = "Striken"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("Cancelable") then
+v = game.ReplicatedStorage.Moves.BStrike4["Cancelable"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike4)
+end
+v.Name = "Cancelable"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("MoveStart") then
+v = game.ReplicatedStorage.Moves.BStrike4["MoveStart"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike4)
+end
+v.Value = 0.15
+v.Name = "MoveStart"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("KnockoutDistance") then
+v = game.ReplicatedStorage.Moves.BStrike4["KnockoutDistance"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike4)
+end
+v.Value = 6
+v.Name = "KnockoutDistance"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("FinishingBlow") then
+v = game.ReplicatedStorage.Moves.BStrike4["FinishingBlow"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike4)
+end
+v.Name = "FinishingBlow"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("Circle") then
+v = game.ReplicatedStorage.Moves.BStrike4["Circle"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike4)
+end
+v.Name = "Circle"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("NormalAttack") then
+v = game.ReplicatedStorage.Moves.BStrike4["NormalAttack"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike4)
+end
+v.Name = "NormalAttack"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("ComboAt") then
+v = game.ReplicatedStorage.Moves.BStrike4["ComboAt"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike4)
+end
+v.Value = 0.8
+v.Name = "ComboAt"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("MoveDuration") then
+v = game.ReplicatedStorage.Moves.BStrike4["MoveDuration"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike4)
+end
+v.Value = 0.3
+v.Name = "MoveDuration"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("MoveForward") then
+v = game.ReplicatedStorage.Moves.BStrike4["MoveForward"]
+else
+v = Instance.new("IntValue", game.ReplicatedStorage.Moves.BStrike4)
+end
+v.Value = 12
+v.Name = "MoveForward"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("HSize") then
+v = game.ReplicatedStorage.Moves.BStrike4["HSize"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike4)
+end
+v.Value = 2
+v.Name = "HSize"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("TurnAnim") then
+v = game.ReplicatedStorage.Moves.BStrike4["TurnAnim"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Moves.BStrike4)
+end
+
+v.AnimationId = "rbxassetid://11480728629"
+v.Name = "TurnAnim"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("HitDur") then
+v = game.ReplicatedStorage.Moves.BStrike4["HitDur"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike4)
+end
+v.Value = 0.5
+v.Name = "HitDur"
+if game.ReplicatedStorage.Moves.BStrike4:FindFirstChild("Reaction") then
+v = game.ReplicatedStorage.Moves.BStrike4["Reaction"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Moves.BStrike4)
+end
+v.Value = 'Turnaround'
+v.Name = "Reaction"
+
+
+if game.ReplicatedStorage.Moves:FindFirstChild("BStrike2") then
+v = game.ReplicatedStorage.Moves["BStrike2"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves)
+end
+v.Name = "BStrike2"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("Sound") then
+v = game.ReplicatedStorage.Moves.BStrike2["Sound"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 'PSwing1'
+v.Name = "Sound"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("Anim") then
+v = game.ReplicatedStorage.Moves.BStrike2["Anim"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Moves.BStrike2)
+end
+
+v.AnimationId = "rbxassetid://12801167344"
+v.Name = "Anim"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("Dmg") then
+v = game.ReplicatedStorage.Moves.BStrike2["Dmg"]
+else
+v = Instance.new("IntValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 80
+v.Name = "Dmg"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("AniSpeed") then
+v = game.ReplicatedStorage.Moves.BStrike2["AniSpeed"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 1
+v.Name = "AniSpeed"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("KnockOut") then
+v = game.ReplicatedStorage.Moves.BStrike2["KnockOut"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Name = "KnockOut"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("HitboxLocations") then
+v = game.ReplicatedStorage.Moves.BStrike2["HitboxLocations"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = '[["LeftHand",2,[0,0,0]],["LeftLowerArm",1.5,[0,0,0]],["LeftUpperArm",1,[0,0,0]]]'
+v.Name = "HitboxLocations"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("Trail") then
+v = game.ReplicatedStorage.Moves.BStrike2["Trail"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = ''
+v.Name = "Trail"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("Striken") then
+v = game.ReplicatedStorage.Moves.BStrike2["Striken"]
+else
+v = Instance.new("IntValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 1
+v.Name = "Striken"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("Cancelable") then
+v = game.ReplicatedStorage.Moves.BStrike2["Cancelable"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Name = "Cancelable"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("FinishingBlow") then
+v = game.ReplicatedStorage.Moves.BStrike2["FinishingBlow"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Name = "FinishingBlow"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("NormalAttack") then
+v = game.ReplicatedStorage.Moves.BStrike2["NormalAttack"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Name = "NormalAttack"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("ComboAt") then
+v = game.ReplicatedStorage.Moves.BStrike2["ComboAt"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 0.8
+v.Name = "ComboAt"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("MoveDuration") then
+v = game.ReplicatedStorage.Moves.BStrike2["MoveDuration"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 0.3
+v.Name = "MoveDuration"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("MoveForward") then
+v = game.ReplicatedStorage.Moves.BStrike2["MoveForward"]
+else
+v = Instance.new("IntValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 9
+v.Name = "MoveForward"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("NoShieldBreak") then
+v = game.ReplicatedStorage.Moves.BStrike2["NoShieldBreak"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Name = "NoShieldBreak"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("HSize") then
+v = game.ReplicatedStorage.Moves.BStrike2["HSize"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 1.5
+v.Name = "HSize"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("HitDur") then
+v = game.ReplicatedStorage.Moves.BStrike2["HitDur"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 0.3
+v.Name = "HitDur"
+if game.ReplicatedStorage.Moves.BStrike2:FindFirstChild("MoveStart") then
+v = game.ReplicatedStorage.Moves.BStrike2["MoveStart"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.BStrike2)
+end
+v.Value = 0.3
+v.Name = "MoveStart"
+
+
+
+if game.ReplicatedStorage.Moves:FindFirstChild("Grab") then
+v = game.ReplicatedStorage.Moves["Grab"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves)
+end
+v.Name = "Grab"
+if game.ReplicatedStorage.Moves.Grab:FindFirstChild("Anim") then
+v = game.ReplicatedStorage.Moves.Grab["Anim"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Moves.Grab)
+end
+
+v.AnimationId = "rbxassetid://8706178663"
+v.Name = "Anim"
+if game.ReplicatedStorage.Moves.Grab:FindFirstChild("Dmg") then
+v = game.ReplicatedStorage.Moves.Grab["Dmg"]
+else
+v = Instance.new("IntValue", game.ReplicatedStorage.Moves.Grab)
+end
+v.Value = 5
+v.Name = "Dmg"
+if game.ReplicatedStorage.Moves.Grab:FindFirstChild("HitboxLocations") then
+v = game.ReplicatedStorage.Moves.Grab["HitboxLocations"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Moves.Grab)
+end
+v.Value = '[["LeftHand",1.5,[0,0,0]],["LeftLowerArm",1.125,[0,0,0]],["LeftUpperArm",0.75,[0,0,0]],["RightHand",1.5,[0,0,0]],["RightLowerArm",1.125,[0,0,0]],["RightUpperArm",0.75,[0,0,0]]]'
+v.Name = "HitboxLocations"
+if game.ReplicatedStorage.Moves.Grab:FindFirstChild("AniSpeed") then
+v = game.ReplicatedStorage.Moves.Grab["AniSpeed"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.Grab)
+end
+v.Value = 1.375
+v.Name = "AniSpeed"
+if game.ReplicatedStorage.Moves.Grab:FindFirstChild("Sound") then
+v = game.ReplicatedStorage.Moves.Grab["Sound"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Moves.Grab)
+end
+v.Value = 'Grab1'
+v.Name = "Sound"
+if game.ReplicatedStorage.Moves.Grab:FindFirstChild("MoveDuration") then
+v = game.ReplicatedStorage.Moves.Grab["MoveDuration"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.Grab)
+end
+v.Value = 0.15
+v.Name = "MoveDuration"
+if game.ReplicatedStorage.Moves.Grab:FindFirstChild("MoveForward") then
+v = game.ReplicatedStorage.Moves.Grab["MoveForward"]
+else
+v = Instance.new("IntValue", game.ReplicatedStorage.Moves.Grab)
+end
+v.Value = 4
+v.Name = "MoveForward"
+if game.ReplicatedStorage.Moves.Grab:FindFirstChild("Grabber") then
+v = game.ReplicatedStorage.Moves.Grab["Grabber"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Moves.Grab)
+end
+v.Name = "Grabber"
+if game.ReplicatedStorage.Moves.Grab:FindFirstChild("HitDur") then
+v = game.ReplicatedStorage.Moves.Grab["HitDur"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.Grab)
+end
+v.Value = 0.2
+v.Name = "HitDur"
+if game.ReplicatedStorage.Moves.Grab:FindFirstChild("EndAt") then
+v = game.ReplicatedStorage.Moves.Grab["EndAt"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.Grab)
+end
+v.Value = 1
+v.Name = "EndAt"
+if game.ReplicatedStorage.Moves.Grab:FindFirstChild("ForceSF") then
+v = game.ReplicatedStorage.Moves.Grab["ForceSF"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Moves.Grab)
+end
+v.Value = 0.15
+v.Name = "ForceSF"
+
+
+
+while task.wait() and not interf.Client.Disabled do
+	update()
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--credit audi (6/06/2023)
+--https://www.youtube.com/channel/UCMZ3UpqQcQVKDX7BeXczfyQ
+--I need to put credit because no one will steal my script and claim it as there own
+--https://www.youtube.com/watch?v=fzRgPh9tU1o&t=6s first vid about akiyama on budget
+--https://www.youtube.com/watch?v=yI5eYBEwOZU&t=71s second vid about akiyama on budget
+--https://www.youtube.com/watch?v=C45kojjY5pg sugarcoating with akiyama on budget

@@ -1,0 +1,591 @@
+if game.ReplicatedStorage.Styles:FindFirstChild("Brawler") then
+v = game.ReplicatedStorage.Styles["Brawler"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Styles)
+end
+v.Name = "Brawler"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_Getup") then
+v = game.ReplicatedStorage.Styles.Brawler["H_Getup"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_FallenFinisher'
+v.Name = "H_Getup"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("Rush1") then
+v = game.ReplicatedStorage.Styles.Brawler["Rush1"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'BAttack1'
+v.Name = "Rush1"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("Rush2") then
+v = game.ReplicatedStorage.Styles.Brawler["Rush2"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'BAttack2'
+v.Name = "Rush2"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("Speed") then
+v = game.ReplicatedStorage.Styles.Brawler["Speed"]
+else
+v = Instance.new("NumberValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 1.6
+v.Name = "Speed"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("Color") then
+v = game.ReplicatedStorage.Styles.Brawler["Color"]
+else
+v = Instance.new("Color3Value", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = Color3.fromRGB(143.00000667572021,0,143.00000667572021)
+v.Name = "Color"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("Strike1") then
+v = game.ReplicatedStorage.Styles.Brawler["Strike1"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'BStrike1'
+v.Name = "Strike1"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("Rush3") then
+v = game.ReplicatedStorage.Styles.Brawler["Rush3"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'BAttack3'
+v.Name = "Rush3"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_LowHealthFallen") then
+v = game.ReplicatedStorage.Styles.Brawler["H_LowHealthFallen"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_FallenFinisher'
+v.Name = "H_LowHealthFallen"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_FullStunned") then
+v = game.ReplicatedStorage.Styles.Brawler["H_FullStunned"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_GUltimateEssence'
+v.Name = "H_FullStunned"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_CounterSoloAllBack") then
+v = game.ReplicatedStorage.Styles.Brawler["H_CounterSoloAllBack"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_FastFootworkRight'
+v.Name = "H_CounterSoloAllBack"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("Rush4") then
+v = game.ReplicatedStorage.Styles.Brawler["Rush4"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'BAttack4'
+v.Name = "Rush4"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("Strike2") then
+v = game.ReplicatedStorage.Styles.Brawler["Strike2"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'BStrike2'
+v.Name = "Strike2"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("Strike3") then
+v = game.ReplicatedStorage.Styles.Brawler["Strike3"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'BStrike3'
+v.Name = "Strike3"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("Strike4") then
+v = game.ReplicatedStorage.Styles.Brawler["Strike4"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'BStrike4'
+v.Name = "Strike4"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("Strike5") then
+v = game.ReplicatedStorage.Styles.Brawler["Strike5"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'P_SAttack3'
+v.Name = "Strike5"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("Grab") then
+v = game.ReplicatedStorage.Styles.Brawler["Grab"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'GGrab'
+v.Name = "Grab"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("BlockStrike") then
+v = game.ReplicatedStorage.Styles.Brawler["BlockStrike"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'GuruKnockback'
+v.Name = "BlockStrike"
+if game.ReplicatedStorage.Styles.Brawler.BlockStrike:FindFirstChild("Ability") then
+v = game.ReplicatedStorage.Styles.Brawler.BlockStrike["Ability"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler.BlockStrike)
+end
+v.Value = 'Guru Knockback'
+v.Name = "Ability"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_Fallen") then
+v = game.ReplicatedStorage.Styles.Brawler["H_Fallen"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_WallSmackLeg'
+v.Name = "H_Fallen"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_GunStanding") then
+v = game.ReplicatedStorage.Styles.Brawler["H_GunStanding"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_ShotStopper'
+v.Name = "H_GunStanding"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("VisualName") then
+v = game.ReplicatedStorage.Styles.Brawler["VisualName"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'Maniac'
+v.Name = "VisualName"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("Throw") then
+v = game.ReplicatedStorage.Styles.Brawler["Throw"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'T_LegToss'
+v.Name = "Throw"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("StrikeThrow") then
+v = game.ReplicatedStorage.Styles.Brawler["StrikeThrow"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'T_FinishingHold'
+v.Name = "StrikeThrow"
+if game.ReplicatedStorage.Styles.Brawler.StrikeThrow:FindFirstChild("Ability") then
+v = game.ReplicatedStorage.Styles.Brawler.StrikeThrow["Ability"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler.StrikeThrow)
+end
+v.Value = 'Finishing Hold'
+v.Name = "Ability"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("DoubleBlows") then
+v = game.ReplicatedStorage.Styles.Brawler["DoubleBlows"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Name = "DoubleBlows"
+if game.ReplicatedStorage.Styles.Brawler.DoubleBlows:FindFirstChild("Ability") then
+v = game.ReplicatedStorage.Styles.Brawler.DoubleBlows["Ability"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler.DoubleBlows)
+end
+v.Value = 'Double Finishing Blow'
+v.Name = "Ability"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("2Strike4") then
+v = game.ReplicatedStorage.Styles.Brawler["2Strike4"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'B2Strike3'
+v.Name = "2Strike4"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("2Strike3") then
+v = game.ReplicatedStorage.Styles.Brawler["2Strike3"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'B2Strike2'
+v.Name = "2Strike3"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("2Strike5") then
+v = game.ReplicatedStorage.Styles.Brawler["2Strike5"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'B2Strike4'
+v.Name = "2Strike5"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("2Strike2") then
+v = game.ReplicatedStorage.Styles.Brawler["2Strike2"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'B2Strike1'
+v.Name = "2Strike2"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_GrabOnWall") then
+v = game.ReplicatedStorage.Styles.Brawler["H_GrabOnWall"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_WallSmack'
+v.Name = "H_GrabOnWall"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("StanceStrike") then
+v = game.ReplicatedStorage.Styles.Brawler["StanceStrike"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'TigerDrop'
+v.Name = "StanceStrike"
+if game.ReplicatedStorage.Styles.Brawler.StanceStrike:FindFirstChild("Ability") then
+v = game.ReplicatedStorage.Styles.Brawler.StanceStrike["Ability"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler.StanceStrike)
+end
+v.Value = 'Counter Hook'
+v.Name = "Ability"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("EvadeStrikeB") then
+v = game.ReplicatedStorage.Styles.Brawler["EvadeStrikeB"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'BEvadeStrikeBack'
+v.Name = "EvadeStrikeB"
+if game.ReplicatedStorage.Styles.Brawler.EvadeStrikeB:FindFirstChild("Ability") then
+v = game.ReplicatedStorage.Styles.Brawler.EvadeStrikeB["Ability"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler.EvadeStrikeB)
+end
+v.Value = 'Guru Dodge Shot'
+v.Name = "Ability"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("EvadeStrikeL") then
+v = game.ReplicatedStorage.Styles.Brawler["EvadeStrikeL"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'BEvadeStrikeLeft'
+v.Name = "EvadeStrikeL"
+if game.ReplicatedStorage.Styles.Brawler.EvadeStrikeL:FindFirstChild("Ability") then
+v = game.ReplicatedStorage.Styles.Brawler.EvadeStrikeL["Ability"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler.EvadeStrikeL)
+end
+v.Value = 'Guru Dodge Shot'
+v.Name = "Ability"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("EvadeStrikeF") then
+v = game.ReplicatedStorage.Styles.Brawler["EvadeStrikeF"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'BEvadeStrikeForward'
+v.Name = "EvadeStrikeF"
+if game.ReplicatedStorage.Styles.Brawler.EvadeStrikeF:FindFirstChild("Ability") then
+v = game.ReplicatedStorage.Styles.Brawler.EvadeStrikeF["Ability"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler.EvadeStrikeF)
+end
+v.Value = 'Guru Dodge Shot'
+v.Name = "Ability"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("EvadeStrikeR") then
+v = game.ReplicatedStorage.Styles.Brawler["EvadeStrikeR"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'BEvadeStrikeRight'
+v.Name = "EvadeStrikeR"
+if game.ReplicatedStorage.Styles.Brawler.EvadeStrikeR:FindFirstChild("Ability") then
+v = game.ReplicatedStorage.Styles.Brawler.EvadeStrikeR["Ability"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler.EvadeStrikeR)
+end
+v.Value = 'Guru Dodge Shot'
+v.Name = "Ability"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("DashAttack") then
+v = game.ReplicatedStorage.Styles.Brawler["DashAttack"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'DashAttack'
+v.Name = "DashAttack"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_GrabStanding") then
+v = game.ReplicatedStorage.Styles.Brawler["H_GrabStanding"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_Fisticuffs'
+v.Name = "H_GrabStanding"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_BlockingEnemy") then
+v = game.ReplicatedStorage.Styles.Brawler["H_BlockingEnemy"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_FaceTwist'
+v.Name = "H_BlockingEnemy"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_FallenDown") then
+v = game.ReplicatedStorage.Styles.Brawler["H_FallenDown"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_FallenProne'
+v.Name = "H_FallenDown"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("GrabCorpses") then
+v = game.ReplicatedStorage.Styles.Brawler["GrabCorpses"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Name = "GrabCorpses"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_StandingBehind") then
+v = game.ReplicatedStorage.Styles.Brawler["H_StandingBehind"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_Chokehold'
+v.Name = "H_StandingBehind"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_SuperEvading") then
+v = game.ReplicatedStorage.Styles.Brawler["H_SuperEvading"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_Rolling'
+v.Name = "H_SuperEvading"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_CounterSoloAllLeft") then
+v = game.ReplicatedStorage.Styles.Brawler["H_CounterSoloAllLeft"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_FastFootworkLeft'
+v.Name = "H_CounterSoloAllLeft"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_CounterSoloAllFront") then
+v = game.ReplicatedStorage.Styles.Brawler["H_CounterSoloAllFront"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_SpinCounterFront'
+v.Name = "H_CounterSoloAllFront"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_CounterSoloAllRight") then
+v = game.ReplicatedStorage.Styles.Brawler["H_CounterSoloAllRight"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_FastFootworkRight'
+v.Name = "H_CounterSoloAllRight"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_GrabStanding2") then
+v = game.ReplicatedStorage.Styles.Brawler["H_GrabStanding2"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_DoubleHeadCrush'
+v.Name = "H_GrabStanding2"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_RunningFallen") then
+v = game.ReplicatedStorage.Styles.Brawler["H_RunningFallen"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_FinishingBlow'
+v.Name = "H_RunningFallen"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("HThrow") then
+v = game.ReplicatedStorage.Styles.Brawler["HThrow"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'T_LegToss'
+v.Name = "HThrow"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_Knocked") then
+v = game.ReplicatedStorage.Styles.Brawler["H_Knocked"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_SolidCounter'
+v.Name = "H_Knocked"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("GrabStrike") then
+v = game.ReplicatedStorage.Styles.Brawler["GrabStrike"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'T_GuruParry'
+v.Name = "GrabStrike"
+if game.ReplicatedStorage.Styles.Brawler.GrabStrike:FindFirstChild("Ability") then
+v = game.ReplicatedStorage.Styles.Brawler.GrabStrike["Ability"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler.GrabStrike)
+end
+v.Value = 'Guru Parry'
+v.Name = "Ability"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("Block") then
+v = game.ReplicatedStorage.Styles.Brawler["Block"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Styles.Brawler)
+end
+
+v.AnimationId = "rbxassetid://8225208652"
+v.Name = "Block"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("EvadeF") then
+v = game.ReplicatedStorage.Styles.Brawler["EvadeF"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Styles.Brawler)
+end
+
+v.AnimationId = "rbxassetid://11614916023"
+v.Name = "EvadeF"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("EvadeB") then
+v = game.ReplicatedStorage.Styles.Brawler["EvadeB"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Styles.Brawler)
+end
+
+v.AnimationId = "rbxassetid://11614916809"
+v.Name = "EvadeB"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("EvadeL") then
+v = game.ReplicatedStorage.Styles.Brawler["EvadeL"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Styles.Brawler)
+end
+
+v.AnimationId = "rbxassetid://11614918095"
+v.Name = "EvadeL"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("EvadeR") then
+v = game.ReplicatedStorage.Styles.Brawler["EvadeR"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Styles.Brawler)
+end
+
+v.AnimationId = "rbxassetid://11614919036"
+v.Name = "EvadeR"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("HitBlock") then
+v = game.ReplicatedStorage.Styles.Brawler["HitBlock"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Styles.Brawler)
+end
+
+v.AnimationId = "rbxassetid://11953475759"
+v.Name = "HitBlock"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_GunStandingHandgun") then
+v = game.ReplicatedStorage.Styles.Brawler["H_GunStandingHandgun"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_ShotStopperHandgun'
+v.Name = "H_GunStandingHandgun"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_GunStandingSMG") then
+v = game.ReplicatedStorage.Styles.Brawler["H_GunStandingSMG"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_ShotStopperSMG'
+v.Name = "H_GunStandingSMG"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_BackWall") then
+v = game.ReplicatedStorage.Styles.Brawler["H_BackWall"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_WallSmashing'
+v.Name = "H_BackWall"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_GunStandingShotgun") then
+v = game.ReplicatedStorage.Styles.Brawler["H_GunStandingShotgun"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_ShotStopperShotgun'
+v.Name = "H_GunStandingShotgun"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("WalkF") then
+v = game.ReplicatedStorage.Styles.Brawler["WalkF"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Styles.Brawler)
+end
+
+v.AnimationId = "rbxassetid://12313793138"
+v.Name = "WalkF"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("WalkR") then
+v = game.ReplicatedStorage.Styles.Brawler["WalkR"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Styles.Brawler)
+end
+
+v.AnimationId = "rbxassetid://12313794960"
+v.Name = "WalkR"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("WalkB") then
+v = game.ReplicatedStorage.Styles.Brawler["WalkB"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Styles.Brawler)
+end
+
+v.AnimationId = "rbxassetid://12313791263"
+v.Name = "WalkB"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("WalkL") then
+v = game.ReplicatedStorage.Styles.Brawler["WalkL"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Styles.Brawler)
+end
+
+v.AnimationId = "rbxassetid://12313796155"
+v.Name = "WalkL"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("Idle") then
+v = game.ReplicatedStorage.Styles.Brawler["Idle"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Styles.Brawler)
+end
+
+v.AnimationId = "rbxassetid://7603752794"
+v.Name = "Idle"
+if game.ReplicatedStorage.Styles.Brawler.Idle:FindFirstChild("Core") then
+v = game.ReplicatedStorage.Styles.Brawler.Idle["Core"]
+else
+v = Instance.new("Folder", game.ReplicatedStorage.Styles.Brawler.Idle)
+end
+v.Name = "Core"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("SuperEvadeR") then
+v = game.ReplicatedStorage.Styles.Brawler["SuperEvadeR"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Styles.Brawler)
+end
+
+v.AnimationId = "rbxassetid://12908871170"
+v.Name = "SuperEvadeR"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("SuperEvadeL") then
+v = game.ReplicatedStorage.Styles.Brawler["SuperEvadeL"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Styles.Brawler)
+end
+
+v.AnimationId = "rbxassetid://12908873302"
+v.Name = "SuperEvadeL"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("SuperEvadeF") then
+v = game.ReplicatedStorage.Styles.Brawler["SuperEvadeF"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Styles.Brawler)
+end
+
+v.AnimationId = "rbxassetid://12908869198"
+v.Name = "SuperEvadeF"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("SuperEvadeB") then
+v = game.ReplicatedStorage.Styles.Brawler["SuperEvadeB"]
+else
+v = Instance.new("Animation", game.ReplicatedStorage.Styles.Brawler)
+end
+
+v.AnimationId = "rbxassetid://12908875960"
+v.Name = "SuperEvadeB"
+if game.ReplicatedStorage.Styles.Brawler:FindFirstChild("H_GetupUp") then
+v = game.ReplicatedStorage.Styles.Brawler["H_GetupUp"]
+else
+v = Instance.new("StringValue", game.ReplicatedStorage.Styles.Brawler)
+end
+v.Value = 'H_HeadPressUp'
+v.Name = "H_GetupUp"
+
+local plr = game:GetService("Players").LocalPlayer
+local pgui = plr.PlayerGui
+local interf = pgui.Interface
+
+-- get player
+
+for i,v in ipairs(game:GetService("ReplicatedStorage").Moves:GetChildren()) do
+    if v.Name:lower():find("taunt") then -- find all taunt moves
+        v.Anim.AnimationId = 'rbxassetid://9313515166' -- swap taunt animation
+    end
+end
+
+
+
+-- reload moves
+
+interf.Client.Disabled = true
+task.wait()
+interf.Client.Disabled = false
+task.wait(0.1)
+plr.Character.LowerTorso.CFrame = cframe
+
+-- Replace
+
+game.ReplicatedStorage.Moves.TigerDrop.Anim.AnimationId = "rbxassetid://11518213589"
+game.ReplicatedStorage.Moves.GGrab.Anim.AnimationId = "rbxassetid://8706178663"
